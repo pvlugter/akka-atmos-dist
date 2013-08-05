@@ -2,7 +2,7 @@
 import sbt._
 import Keys._
 import akka.sbt.AkkaKernelPlugin
-import akka.sbt.AkkaKernelPlugin.{ Dist, outputDirectory, distJvmOptions}
+import akka.sbt.AkkaKernelPlugin.{ Dist, distBootClass, distJvmOptions, outputDirectory }
 
 object HelloKernelBuild extends Build {
   val Organization = "akka.sample"
@@ -15,6 +15,7 @@ object HelloKernelBuild extends Build {
     settings = defaultSettings ++ AkkaKernelPlugin.distSettings ++ AtmosDist.settings ++ Seq(
       libraryDependencies ++= Dependencies.helloKernel,
       distJvmOptions in Dist := "-Xms256M -Xmx1024M",
+      distBootClass in Dist := "sample.kernel.hello.HelloKernel",
       outputDirectory in Dist := file("target/hello-dist")
     )
   )
